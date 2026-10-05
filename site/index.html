@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Second Helping · Campaign concept</title>
+<meta name="description" content="Interview concept: a mobile-first donation landing page for a two-week digital fundraising campaign. Not a live appeal; no payments are taken.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#334426; --ink:#1C2616; --crimson:#ED1B2E; --crimson-dark:#C8101F;
+    --teal:#5EBFBC; --apple:#8CBE1D; --pale:#EEF3EA; --pale-pink:#FCE1E4; --pale-teal:#D7EFEE;
+    --line:#DFE5DA; --muted:#5B6155; --white:#FFFFFF;
+    --radius:16px; --gutter:16px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--white);color:var(--ink);font-family:Lato,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.5}
+  img{max-width:100%;display:block}
+  a{color:var(--green)}
+  h1,h2,h3{font-weight:900;color:var(--green);line-height:1.1;margin:0}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 var(--gutter)}
+
+  /* Concept banner */
+  .concept{background:var(--ink);color:#fff;font-size:13px;line-height:1.4;padding:8px var(--gutter);text-align:center;position:sticky;top:0;z-index:20}
+  .concept strong{color:var(--teal)}
+  .concept a{color:#fff}
+
+  /* Header */
+  header.site{border-bottom:1px solid var(--line);background:#fff}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;color:var(--green);font-size:18px}
+  .brand img{height:38px;width:auto}
+  .header-cta{background:var(--crimson);color:#fff;text-decoration:none;font-weight:900;font-size:15px;padding:9px 16px;border-radius:999px}
+
+  /* Layout */
+  .top{display:grid;gap:20px;padding:20px 0 8px}
+  @media (min-width:960px){
+    .top{grid-template-columns:1fr 400px;gap:40px;padding-top:36px;align-items:start}
+    .donate-card{position:sticky;top:64px}
+  }
+
+  /* Film */
+  .film{position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer;background:#0f1a2a;aspect-ratio:16/9;border:0;padding:0;width:100%;display:block}
+  .film img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .film:hover img{transform:scale(1.03)}
+  .film::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,38,22,0) 45%,rgba(28,38,22,.65) 100%)}
+  .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;z-index:2;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .play::before{content:"";margin-left:7px;border-left:24px solid var(--crimson);border-top:15px solid transparent;border-bottom:15px solid transparent}
+  .film-label{position:absolute;left:14px;bottom:12px;z-index:2;color:#fff;font-weight:700;font-size:14px;text-align:left}
+  .film-label b{display:block;font-size:17px}
+
+  .kicker{font-size:13px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--crimson);margin:18px 0 6px}
+  h1{font-size:clamp(30px,6.5vw,52px);letter-spacing:-.01em}
+  .lede{font-size:clamp(18px,2.4vw,21px);font-style:italic;color:var(--muted);margin:10px 0 0}
+
+  /* Counter */
+  .counter{background:var(--pale);border-radius:var(--radius);padding:14px 16px;margin-top:18px}
+  .counter .num{font-size:28px;font-weight:900;color:var(--green)}
+  .counter .lbl{color:var(--muted);font-size:15px}
+  .bar{height:9px;border-radius:9px;background:#D6E0CF;margin-top:8px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--crimson);border-radius:9px;transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+  .goal{font-size:13px;color:var(--muted);margin-top:6px}
+
+  /* Donation card */
+  .donate-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 10px 30px rgba(28,38,22,.08)}
+  .donate-card h2{font-size:22px;margin-bottom:12px}
+  .toggle{display:grid;grid-template-columns:1fr 1fr;background:#F1F2EF;border-radius:12px;padding:4px;margin-bottom:12px}
+  .toggle input{position:absolute;opacity:0;pointer-events:none}
+  .toggle label{text-align:center;font-weight:700;font-size:15px;padding:9px 0;border-radius:9px;color:var(--muted);cursor:pointer}
+  .toggle input:checked+label{background:#fff;color:var(--green);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  .toggle input:focus-visible+label{outline:3px solid var(--teal)}
+  .amounts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .amounts input{position:absolute;opacity:0;pointer-events:none}
+  .amounts label{display:block;border:2px solid var(--line);border-radius:12px;padding:9px 12px;cursor:pointer;transition:border-color .15s,background .15s}
+  .amounts label b{display:block;font-size:21px;color:var(--green)}
+  .amounts label span{font-size:14px;color:var(--muted)}
+  .amounts input:checked+label{border-color:var(--crimson);background:var(--pale-pink)}
+  .amounts input:checked+label b{color:var(--crimson)}
+  .amounts input:focus-visible+label{outline:3px solid var(--teal);outline-offset:2px}
+  .other{display:none;margin-top:8px}
+  .other.show{display:block}
+  .other label{font-size:14px;font-weight:700;color:var(--green)}
+  .other .field{display:flex;align-items:center;border:2px solid var(--line);border-radius:12px;margin-top:4px;padding:0 12px}
+  .other .field span{font-weight:900;color:var(--green)}
+  .other input{border:0;outline:0;font:inherit;font-size:19px;padding:10px 6px;width:100%;color:var(--ink);background:transparent}
+  .giftaid{display:flex;gap:10px;align-items:flex-start;margin:14px 0 4px;font-size:15px;cursor:pointer}
+  .giftaid input{width:20px;height:20px;accent-color:var(--green);margin-top:2px;flex:none}
+  .giftaid small{display:block;color:var(--muted);font-size:12.5px;line-height:1.4;margin-top:2px}
+  .btn{display:flex;align-items:center;justify-content:center;width:100%;border:0;border-radius:14px;font:inherit;font-weight:900;cursor:pointer}
+  .btn-donate{background:var(--crimson);color:#fff;font-size:18px;height:56px;margin-top:12px}
+  .btn-donate:hover{background:var(--crimson-dark)}
+  .wallets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+  .btn-wallet{background:#000;color:#fff;height:46px;font-size:15px}
+  .secure{text-align:center;font-size:12.5px;color:var(--muted);margin-top:10px}
+  :focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+
+  /* Sections */
+  section{padding:44px 0}
+  .section-kicker{font-size:13px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--crimson);margin-bottom:6px}
+  h2.big{font-size:clamp(26px,4.5vw,38px);margin-bottom:20px}
+  .pillars{display:grid;gap:14px}
+  @media (min-width:760px){.pillars{grid-template-columns:repeat(3,1fr)}}
+  .pillar{border-radius:var(--radius);padding:20px;color:#fff;position:relative;overflow:hidden;min-height:230px;display:flex;flex-direction:column}
+  .pillar .n{font-size:13px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+  .pillar h3{color:inherit;font-size:24px;margin:8px 0 10px}
+  .pillar p{margin:0;font-size:16px}
+  .pillar .stat{margin-top:auto;padding-top:14px;font-size:14px;opacity:.95}
+  .pillar .stat b{display:block;font-size:30px;font-weight:900;line-height:1.1}
+  .p1{background:var(--green)}
+  .p2{background:var(--crimson)}
+  .p3{background:var(--teal);color:var(--green)}
+  .pillar::after{content:"";position:absolute;right:-50px;top:-50px;width:150px;height:150px;border-radius:50%;border:2px solid currentColor;opacity:.18}
+
+  .where{background:var(--pale)}
+  .where-grid{display:grid;gap:18px;align-items:center}
+  @media (min-width:860px){.where-grid{grid-template-columns:1.1fr 1fr;gap:40px}}
+  .plates{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+  .plate{width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid var(--crimson);display:grid;place-items:center;font-size:13px;font-weight:900;color:var(--crimson)}
+  .coin{background:var(--crimson);color:#fff;border-color:var(--crimson);font-size:15px}
+  .where p{margin:0 0 10px}
+
+  .volunteer{display:grid;gap:14px;align-items:center;background:var(--green);color:#fff;border-radius:20px;padding:24px}
+  @media (min-width:760px){.volunteer{grid-template-columns:1fr auto;padding:32px}}
+  .volunteer h2{color:#fff;font-size:clamp(24px,4vw,32px)}
+  .volunteer p{margin:8px 0 0;color:#DCE6D5}
+  .btn-outline{display:inline-flex;align-items:center;justify-content:center;border:2px solid #fff;color:#fff;text-decoration:none;font-weight:900;padding:12px 22px;border-radius:999px;white-space:nowrap}
+
+  .trust{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;text-align:center}
+  @media (min-width:760px){.trust{grid-template-columns:repeat(4,1fr)}}
+  .trust div{border:1px solid var(--line);border-radius:var(--radius);padding:16px 10px}
+  .trust b{display:block;font-size:26px;font-weight:900;color:var(--green)}
+  .trust span{font-size:14px;color:var(--muted)}
+
+  footer{background:var(--ink);color:#C9D2C3;font-size:14px;padding:28px 0 90px}
+  footer .wrap{display:grid;gap:10px}
+  footer a{color:#fff}
+  footer .f-brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:900}
+  footer .f-brand img{height:30px;filter:brightness(1.05)}
+
+  /* Sticky mobile donate bar */
+  .mobile-bar{position:fixed;left:0;right:0;bottom:0;padding:10px var(--gutter) calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);border-top:1px solid var(--line);z-index:15;transform:translateY(110%);transition:transform .25s ease}
+  .mobile-bar.show{transform:none}
+  .mobile-bar a{display:flex;align-items:center;justify-content:center;height:50px;border-radius:14px;background:var(--crimson);color:#fff;font-weight:900;text-decoration:none}
+  @media (min-width:960px){.mobile-bar{display:none}}
+
+  /* Dialogs */
+  dialog{border:0;border-radius:20px;padding:0;max-width:min(560px,calc(100vw - 32px));width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  dialog::backdrop{background:rgba(28,38,22,.7)}
+  .dlg-body{padding:24px}
+  .dlg-close{position:absolute;right:12px;top:10px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.9);font-size:24px;line-height:1;cursor:pointer;color:var(--ink);z-index:2}
+  #filmDialog{max-width:min(960px,calc(100vw - 32px));background:#000}
+  #filmDialog video{width:100%;display:block;aspect-ratio:16/9;background:#000}
+  .film-missing{display:none;padding:16px 20px;color:#fff;font-size:15px;background:#111}
+  .film-missing.show{display:block}
+  .ty-head{background:var(--crimson);color:#fff;padding:58px 24px 22px;text-align:center}
+  .ty-head .tag{display:inline-block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.18);padding:5px 10px;border-radius:999px}
+  .ty-head h2{color:#fff;font-size:30px;margin-top:12px}
+  .ty-head p{margin:8px 0 0;font-size:17px}
+  .next{display:grid;gap:10px;margin-top:4px}
+  .next .row{display:flex;gap:12px;align-items:flex-start;background:var(--pale);border-radius:12px;padding:12px 14px;font-size:15px}
+  .next .row b{color:var(--green)}
+  .next .dot{width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-weight:900;font-size:14px;display:grid;place-items:center;flex:none}
+  .btn-share{background:var(--green);color:#fff;height:50px;font-size:16px;margin-top:14px}
+  .btn-ghost{background:transparent;color:var(--green);height:44px;font-size:15px;margin-top:6px;text-decoration:underline}
+  .note{font-size:12.5px;color:var(--muted);text-align:center;margin-top:8px}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;z-index:40;pointer-events:none}
+  .toast.show{opacity:1}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="concept" role="note">
+  <strong>Interview concept</strong> · Not a live appeal · No payments are taken ·
+  <a href="https://www.faresharemidlands.org.uk/" rel="noopener">Visit the real FareShare Midlands</a>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="FareShare Midlands, back to top">
+      <img src="assets/logo.png" alt="" width="34" height="38">FareShare Midlands
+    </a>
+    <a class="header-cta" href="#donate">Donate</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap top">
+    <div>
+      <button class="film" id="filmBtn" type="button" aria-label="Play the 30-second film, Life of a Crate">
+        <img src="assets/life-of-a-crate.jpg" alt="Gloved hands lifting a crate in front of tall stacks of blue food crates" width="1600" height="900">
+        <span class="play" aria-hidden="true"></span>
+        <span class="film-label"><b>Life of a Crate</b>One crate, from bin to breakfast club · 0:30</span>
+      </button>
+
+      <p class="kicker">Second Helping</p>
+      <h1>Give good food a second helping</h1>
+      <p class="lede">Good food deserves a second helping. So do people.</p>
+
+      <div class="counter" aria-live="polite">
+        <span class="num" id="mealCount">38,412</span> <span class="lbl">meals funded so far</span>
+        <div class="bar"><i id="mealBar"></i></div>
+        <div class="goal">Goal: 60,000 meals in two weeks · <span id="daysLeft">9 days left</span></div>
+      </div>
+    </div>
+
+    <aside class="donate-card" id="donate" aria-labelledby="donate-title">
+      <h2 id="donate-title">Serve a second helping</h2>
+      <form id="donateForm" novalidate>
+        <div class="toggle" role="radiogroup" aria-label="Donation frequency">
+          <input type="radio" name="freq" id="f-once" value="once" checked><label for="f-once">One-off</label>
+          <input type="radio" name="freq" id="f-month" value="monthly"><label for="f-month">Monthly</label>
+        </div>
+
+        <fieldset style="border:0;margin:0;padding:0">
+          <legend class="sr" style="position:absolute;left:-9999px">Choose an amount</legend>
+          <div class="amounts">
+            <input type="radio" name="amt" id="a5" value="5"><label for="a5"><b>£5</b><span data-meals="5">20 meals</span></label>
+            <input type="radio" name="amt" id="a10" value="10" checked><label for="a10"><b>£10</b><span data-meals="10">40 meals</span></label>
+            <input type="radio" name="amt" id="a25" value="25"><label for="a25"><b>£25</b><span data-meals="25">100 meals</span></label>
+            <input type="radio" name="amt" id="aOther" value="other"><label for="aOther"><b>Other</b><span>Your amount</span></label>
+          </div>
+          <div class="other" id="otherWrap">
+            <label for="otherAmt">Your amount</label>
+            <div class="field"><span>£</span><input id="otherAmt" type="number" inputmode="decimal" min="1" step="1" placeholder="15"></div>
+          </div>
+        </fieldset>
+
+        <label class="giftaid">
+          <input type="checkbox" id="giftAid" checked>
+          <span><span id="gaText">Add £2.50 at no cost to you with Gift Aid</span>
+          <small>I'm a UK taxpayer and understand that if I pay less Income Tax and/or Capital Gains Tax than the Gift Aid claimed on all my donations in that tax year, it's my responsibility to pay the difference.</small></span>
+        </label>
+
+        <button class="btn btn-donate" type="submit" id="donateBtn">Donate £10 · 40 meals</button>
+        <div class="wallets">
+          <button class="btn btn-wallet" type="button" data-wallet>Apple Pay</button>
+          <button class="btn btn-wallet" type="button" data-wallet>Google Pay</button>
+        </div>
+        <p class="secure">Registered charity no. 1146847 · Concept only: no payment is taken</p>
+      </form>
+    </aside>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <p class="section-kicker">One crate, three second chances</p>
+      <h2 class="big">Where a second helping goes</h2>
+      <div class="pillars">
+        <article class="pillar p1">
+          <span class="n">01 · The food</span>
+          <h3>Rescued, not wasted</h3>
+          <p>In-date, quality surplus from the food industry that would otherwise be thrown away.</p>
+          <div class="stat"><b>5,000 tonnes</b>of good food redistributed in 2023/24</div>
+        </article>
+        <article class="pillar p2">
+          <span class="n">02 · The people</span>
+          <h3>A fresh start for people, too</h3>
+          <p>Volunteers and trainees at our Coronation Food Hub build skills, confidence and routine while they move the food.</p>
+          <div class="stat"><b>Skills</b>and a team, as well as a meal</div>
+        </article>
+        <article class="pillar p3">
+          <span class="n">03 · The table</span>
+          <h3>Local charities keep their doors open</h3>
+          <p>Breakfast clubs, lunch clubs and community pantries across the Midlands rely on FareShare food.</p>
+          <div class="stat"><b>54%</b>of the charities we supply would have to close their food service without us</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="where">
+    <div class="wrap where-grid">
+      <div>
+        <p class="section-kicker">Where your money goes</p>
+        <h2 class="big">£1 helps us get 4 meals to people</h2>
+        <div class="plates" aria-hidden="true">
+          <span class="plate coin">£1</span><span class="plate">1</span><span class="plate">2</span><span class="plate">3</span><span class="plate">4</span>
+        </div>
+      </div>
+      <div>
+        <p>The food is rescued, so your money pays for what it takes to get it to people: collecting it, keeping it chilled and safe, and delivering it to local charities.</p>
+        <p><b>£10 delivers 40 meals.</b> A monthly gift lets us plan ahead and say yes to more surplus food.</p>
+        <p><a href="#donate">Give a second helping</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="volunteer">
+        <div>
+          <h2>Can't give money? Give your time.</h2>
+          <p>Drive a van, sort food in the warehouse or help in the office. It might be your second helping too.</p>
+        </div>
+        <a class="btn-outline" href="https://www.faresharemidlands.org.uk/" rel="noopener">Volunteer with us</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="trust">
+        <div><b>800</b><span>charities and community groups</span></div>
+        <div><b>83,000</b><span>people fed every week</span></div>
+        <div><b>13m</b><span>meals last year</span></div>
+        <div><b>No. 1</b><span>the region's largest food redistribution charity</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-brand"><img src="assets/logo.png" alt="" width="27" height="30">Second Helping · campaign concept</div>
+    <p style="margin:0">A concept landing page made by Alex Radford for the FareShare Midlands Digital Marketing Officer interview, October 2026. It is not an official FareShare Midlands page, it is not a live appeal and it takes no payments. Figures are from faresharemidlands.org.uk; the meal counter and goal are illustrative.</p>
+    <p style="margin:0">To donate for real, visit <a href="https://www.faresharemidlands.org.uk/" rel="noopener">faresharemidlands.org.uk</a>.</p>
+  </div>
+</footer>
+
+<div class="mobile-bar" id="mobileBar"><a href="#donate" id="mobileBarLink">Donate £10 · 40 meals</a></div>
+
+<dialog id="filmDialog" aria-label="Life of a Crate film">
+  <button class="dlg-close" type="button" data-close aria-label="Close film">×</button>
+  <video id="filmVideo" controls playsinline preload="none" poster="assets/life-of-a-crate.jpg">
+    <source src="assets/life-of-a-crate.mp4" type="video/mp4">
+  </video>
+  <div class="film-missing" id="filmMissing">Film coming soon. To show it here, add your edit as <code>assets/life-of-a-crate.mp4</code>.</div>
+</dialog>
+
+<dialog id="thanksDialog" aria-labelledby="ty-title">
+  <button class="dlg-close" type="button" data-close aria-label="Close">×</button>
+  <div class="ty-head">
+    <span class="tag">Concept preview · No payment taken</span>
+    <h2 id="ty-title">You've just served 40 second helpings</h2>
+    <p id="tySub">Thank you. Your £10 is on its way to a local table.</p>
+  </div>
+  <div class="dlg-body">
+    <div class="next">
+      <div class="row"><span class="dot">1</span><span><b>Within 24 hours:</b> a thank-you email with the full Life of a Crate film.</span></div>
+      <div class="row"><span class="dot">2</span><span><b>In 7 days:</b> an impact update showing where your meals went.</span></div>
+      <div class="row"><span class="dot">3</span><span><b>Pass it on:</b> share the campaign and double the second helpings.</span></div>
+    </div>
+    <button class="btn btn-share" type="button" id="shareBtn">Share Second Helping</button>
+    <button class="btn btn-ghost" type="button" data-close>Back to the page</button>
+    <p class="note">This is a concept for an interview. In the live campaign, this button would open the secure checkout.</p>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  const form = document.getElementById('donateForm');
+  const donateBtn = document.getElementById('donateBtn');
+  const otherWrap = document.getElementById('otherWrap');
+  const otherAmt = document.getElementById('otherAmt');
+  const gaText = document.getElementById('gaText');
+  const giftAid = document.getElementById('giftAid');
+  const barLink = document.getElementById('mobileBarLink');
+  const money = n => '£' + (Number.isInteger(n) ? n : n.toFixed(2));
+
+  function state() {
+    const freq = form.freq.value;
+    let amt = form.amt.value === 'other' ? parseFloat(otherAmt.value) : parseFloat(form.amt.value);
+    if (!amt || amt < 1) amt = 0;
+    return { freq, amt, meals: Math.floor(amt * 4), monthly: freq === 'monthly' };
+  }
+
+  function render() {
+    const s = state();
+    otherWrap.classList.toggle('show', form.amt.value === 'other');
+    document.querySelectorAll('[data-meals]').forEach(el => {
+      const m = Number(el.dataset.meals) * 4;
+      el.textContent = m + ' meals' + (s.monthly ? ' a month' : '');
+    });
+    const per = s.monthly ? ' a month' : '';
+    const label = s.amt ? `Donate ${money(s.amt)}${per} · ${s.meals} meals` : 'Choose an amount';
+    donateBtn.textContent = label;
+    barLink.textContent = s.amt ? `Donate ${money(s.amt)}${per} · ${s.meals} meals` : 'Donate';
+    const ga = s.amt * 0.25;
+    gaText.textContent = s.amt ? `Add ${money(Math.round(ga * 100) / 100)}${per} at no cost to you with Gift Aid` : 'Add 25% at no cost to you with Gift Aid';
+  }
+  form.addEventListener('change', render);
+  otherAmt.addEventListener('input', render);
+  render();
+
+  // Thank-you preview
+  const thanks = document.getElementById('thanksDialog');
+  function openThanks() {
+    const s = state();
+    if (!s.amt) { otherAmt.focus(); toast('Enter an amount first'); return; }
+    document.getElementById('ty-title').textContent = `You've just served ${s.meals} second helpings`;
+    document.getElementById('tySub').textContent = s.monthly
+      ? `Thank you. Your ${money(s.amt)} a month${giftAid.checked ? ', plus Gift Aid,' : ''} will put ${s.meals} meals on local tables every month.`
+      : `Thank you. Your ${money(s.amt)}${giftAid.checked ? ', plus Gift Aid,' : ''} is on its way to a local table.`;
+    thanks.showModal();
+  }
+  form.addEventListener('submit', e => { e.preventDefault(); openThanks(); });
+  document.querySelectorAll('[data-wallet]').forEach(b => b.addEventListener('click', openThanks));
+
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const data = { title: 'Second Helping', text: 'Good food deserves a second helping. So do people.', url: location.href };
+    try {
+      if (navigator.share) { await navigator.share(data); return; }
+      await navigator.clipboard.writeText(location.href);
+      toast('Link copied');
+    } catch (e) { /* share cancelled */ }
+  });
+
+  // Film
+  const filmDialog = document.getElementById('filmDialog');
+  const video = document.getElementById('filmVideo');
+  const missing = document.getElementById('filmMissing');
+  video.querySelector('source').addEventListener('error', () => missing.classList.add('show'));
+  document.getElementById('filmBtn').addEventListener('click', () => {
+    filmDialog.showModal();
+    video.load();
+    const p = video.play();
+    if (p && p.catch) p.catch(() => missing.classList.add('show'));
+  });
+  filmDialog.addEventListener('close', () => video.pause());
+
+  // Close buttons and backdrop clicks
+  document.querySelectorAll('dialog').forEach(d => {
+    d.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => d.close()));
+    d.addEventListener('click', e => { if (e.target === d) d.close(); });
+  });
+
+  // Meal counter
+  const target = 38412, goal = 60000;
+  const countEl = document.getElementById('mealCount');
+  const bar = document.getElementById('mealBar');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(() => { bar.style.width = (target / goal * 100) + '%'; });
+  if (!reduce) {
+    const start = performance.now(), dur = 1600;
+    (function tick(t) {
+      const k = Math.min(1, (t - start) / dur), e = 1 - Math.pow(1 - k, 3);
+      countEl.textContent = Math.round(target * e).toLocaleString('en-GB');
+      if (k < 1) requestAnimationFrame(tick);
+    })(start);
+  }
+
+  // Sticky mobile bar once the donation card scrolls out of view
+  const bar2 = document.getElementById('mobileBar');
+  const card = document.getElementById('donate');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => bar2.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0))
+      .observe(card);
+  }
+
+  // Toast
+  const t = document.getElementById('toast');
+  let tid;
+  function toast(msg) { t.textContent = msg; t.classList.add('show'); clearTimeout(tid); tid = setTimeout(() => t.classList.remove('show'), 1800); }
+})();
+</script>
+</body>
+</html>
